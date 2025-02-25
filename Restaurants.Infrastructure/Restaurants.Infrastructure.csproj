@@ -12,10 +12,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Restaurants.Application\Restaurants.Application.csproj" />
+    <ProjectReference Include="..\Restaurants.Domain\Restaurants.Domain.csproj" />
   </ItemGroup>
 
 </Project>
