@@ -1,5 +1,6 @@
 ﻿
 
+using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Restaurants.Application.Restaurants.Dtos;
 using Restaurants.Domain.Entities;
@@ -12,10 +13,13 @@ internal class RestaurantsService : IRestaurantsService
 {
 	private readonly IRestaurantsRepository _restaurantsRepository;
 	private readonly ILogger<RestaurantsService> _looger;
-	public RestaurantsService(IRestaurantsRepository restaurantsRepository, ILogger<RestaurantsService> looger)
+	private readonly IMapper _mapper;
+	public RestaurantsService(IRestaurantsRepository restaurantsRepository, ILogger<RestaurantsService> looger,
+		IMapper mapper )
 	{
 		_restaurantsRepository = restaurantsRepository;
 		_looger = looger;
+		_mapper = mapper; 
 
 	}
 	public async Task<IEnumerable<RestaurantDto>> GetAllRestaurants()
@@ -23,7 +27,7 @@ internal class RestaurantsService : IRestaurantsService
 		_looger.LogInformation("Getting all restaruants");
 		var restaurants = await _restaurantsRepository.GetAllAsync();
 
-		var restauranstDto = restaurants.Select(RestaurantDto.FromEntity);
+		var restauranstDto = _mapper.Map<IEnumerable<RestaurantDto>>(restaurants); 
 			
 		return restauranstDto!;
 
@@ -34,12 +38,21 @@ internal class RestaurantsService : IRestaurantsService
 		_looger.LogInformation("Getting restaurant By id");
 
 		var restaurant = await _restaurantsRepository.GetByIdAsync(id);
-		var restauranstDto = RestaurantDto.FromEntity(restaurant);
+		var restauranstDto = _mapper.Map<RestaurantDto>(restaurant);
 		return restauranstDto;
 
 		
 	}
 
+	public async Task<int>  Create(CreateRestaurantDto dto)
+	{
+		_looger.LogInformation("Creating a new restaurant");
+
+		var restaurant = _mapper.Map<Restaurant>(dto);
+
+		int id = await _restaurantsRepository.Create(restaurant);
+		return id;
+	}
 
 
 }
