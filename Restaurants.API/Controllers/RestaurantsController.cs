@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Restaurants.Application.Restaurants;
+using Restaurants.Application.Restaurants.Commands.CreateRestaurant;
 using Restaurants.Application.Restaurants.Dtos;
+using Restaurants.Application.Restaurants.Queries.GetAllRestaurants;
+using Restaurants.Application.Restaurants.Queries.GetRestaurantById;
 using Restaurants.Domain.Entities;
 
 namespace Restaurants.API.Controllers;
@@ -10,12 +14,12 @@ namespace Restaurants.API.Controllers;
 [Route("api/restaurants")]
 public class RestaurantsController: ControllerBase
 {
-    private readonly IRestaurantsService _restaurantsService;
+    private readonly IMediator _mediatior;
 
 
-	public RestaurantsController(IRestaurantsService restaurantsService)
+	public RestaurantsController(IMediator mediator)
     {
-        _restaurantsService = restaurantsService;   
+        _mediatior = mediator;   
         
     }
 
@@ -23,7 +27,7 @@ public class RestaurantsController: ControllerBase
 
     public async Task<IActionResult> GetAll()
     {
-        var results = await _restaurantsService.GetAllRestaurants();
+        var results = await _mediatior.Send(new GetAllRestaurantsQuery());
 
         return Ok(results);
     }
@@ -33,7 +37,7 @@ public class RestaurantsController: ControllerBase
 
 	public async Task<IActionResult> GetById([FromRoute]int id)
 	{
-        var result  = await _restaurantsService.GetById(id);
+        var result = await _mediatior.Send(new GetRestaurantByIdQuery(id));
         
         if (result == null)
         {
@@ -46,14 +50,14 @@ public class RestaurantsController: ControllerBase
 
     [HttpPost]
 
-    public async Task<IActionResult> CreateRestaurant([FromBody] CreateRestaurantDto createRestaurantDto)
+    public async Task<IActionResult> CreateRestaurant(CreateRestaurantCommand command)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        int id = await _restaurantsService.Create(createRestaurantDto);
+        int id = await _mediatior.Send(command);
 
         return CreatedAtAction(nameof(GetById),new {id} , null);
     
