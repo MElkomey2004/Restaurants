@@ -15,7 +15,7 @@ namespace Restaurants.Application.Restaurants.Queries.GetRestaurantById
 	{
 		public async Task<RestaurantDto?> Handle(GetRestaurantByIdQuery request, CancellationToken cancellationToken)
 		{
-			looger.LogInformation("Getting restaurant By id");
+			looger.LogInformation("Getting restaurant {RestaurantId}" , request.Id);
 
 			var restaurant = await restaurantsRepository.GetByIdAsync(request.Id);
 			var restauranstDto = mapper.Map<RestaurantDto>(restaurant);

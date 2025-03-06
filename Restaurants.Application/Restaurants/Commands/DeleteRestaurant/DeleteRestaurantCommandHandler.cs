@@ -15,7 +15,7 @@ namespace Restaurants.Application.Restaurants.Commands.DeleteRestaurant
 	{
 		public async Task<bool> Handle(DeleteRestaurantCommand request, CancellationToken cancellationToken)
 		{
-			looger.LogInformation($"Deleting restaurant with id : {request.Id}");
+			looger.LogInformation("Deleting restaurant with id : {RestaurantId}", request.Id);
 			var restaurant = await restaurantsRepository.GetByIdAsync(request.Id);	
 
 			if(restaurant is null )	
