@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Restaurants.Domain.Entities;
+using Restaurants.Domain.Exceptions;
 using Restaurants.Domain.Repositories;
 using System;
 using System.Collections.Generic;
@@ -11,19 +13,19 @@ using System.Threading.Tasks;
 namespace Restaurants.Application.Restaurants.Commands.DeleteRestaurant
 {
 	public class DeleteRestaurantCommandHandler(ILogger<DeleteRestaurantCommandHandler> looger, IMapper mapper , 
-		IRestaurantsRepository restaurantsRepository) : IRequestHandler<DeleteRestaurantCommand, bool>
+		IRestaurantsRepository restaurantsRepository) : IRequestHandler<DeleteRestaurantCommand>
 	{
-		public async Task<bool> Handle(DeleteRestaurantCommand request, CancellationToken cancellationToken)
+		public async Task Handle(DeleteRestaurantCommand request, CancellationToken cancellationToken)
 		{
 			looger.LogInformation("Deleting restaurant with id : {RestaurantId}", request.Id);
-			var restaurant = await restaurantsRepository.GetByIdAsync(request.Id);	
+			var restaurant = await restaurantsRepository.GetByIdAsync(request.Id);
 
-			if(restaurant is null )	
-				return false; 
+			if (restaurant is null)
+				throw  new NotfoundException(nameof(Restaurant),request.Id.ToString());
 
 			await restaurantsRepository.Delete(restaurant);
 
-			return true;
+	
 		}
 	}
 }
