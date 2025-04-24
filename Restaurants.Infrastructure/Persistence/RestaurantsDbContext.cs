@@ -17,6 +17,7 @@ namespace Restaurants.Infrastructure.Persistence
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
+
 			modelBuilder.Entity<Restaurant>()
 				.OwnsOne(r => r.Address);
 

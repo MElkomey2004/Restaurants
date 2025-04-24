@@ -1,4 +1,6 @@
-﻿namespace Restaurants.Domain.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Restaurants.Domain.Entities
 {
 	public  class Dish
 	{
@@ -8,7 +10,7 @@
 
 		public decimal Price { get;set; }	
 		public int? KiloCalories { get;set; }
-		public int ResturantId { get;set; }	
+		public int ResturantId { get;set; }
 
 	}
 }
