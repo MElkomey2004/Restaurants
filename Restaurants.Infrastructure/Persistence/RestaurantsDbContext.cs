@@ -1,11 +1,12 @@
 ﻿
 
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Restaurants.Domain.Entities;
 
 namespace Restaurants.Infrastructure.Persistence
 {
-	public class RestaurantsDbContext : DbContext
+	public class RestaurantsDbContext : IdentityDbContext<User>
 	{
         public RestaurantsDbContext(DbContextOptions<RestaurantsDbContext> options) : base(options)
         {
