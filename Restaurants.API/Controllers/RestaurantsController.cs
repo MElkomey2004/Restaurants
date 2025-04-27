@@ -31,9 +31,10 @@ public class RestaurantsController: ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Policy =PolicyNames.CreatedAtLeast2Restaurants)]
+    [AllowAnonymous]
+    //[Authorize(Policy =PolicyNames.CreatedAtLeast2Restaurants)]
 
-    public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetAll()
+    public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetAll([FromQuery] GetAllRestaurantsQuery query)
     {
         var results = await _mediatior.Send(new GetAllRestaurantsQuery());
 
