@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurants.Application", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurants.Infrastructure", "Restaurants.Infrastructure\Restaurants.Infrastructure.csproj", "{27D830F7-651D-4220-B9FF-C557524470B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurants.Application.Tests", "Restaurants.ApplicationTests\Restaurants.Application.Tests.csproj", "{AAEE60AA-90D6-4915-856F-4115A69E0747}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurants.Tests", "Restaurants.ApplicationTests\Restaurants.Tests.csproj", "{AAEE60AA-90D6-4915-856F-4115A69E0747}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
